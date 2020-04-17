@@ -235,7 +235,7 @@ else:
                           " * You should have received a copy of the GNU General Public License\n" \
                           " * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" \
                           " */\n\n" + file_output
-            with open(_output + "/" + structure[-1][:-4] + ".js", "w+") as f:
+            with open(_output + "/" + structure[-1][:-5] + ".js", "w+") as f:
                 verbose_output("File converted")
                 f.write(file_output)
         else:
