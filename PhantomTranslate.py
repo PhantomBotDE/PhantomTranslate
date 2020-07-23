@@ -15,7 +15,7 @@
 # OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import os, json
+import os, sys, json
 from optparse import OptionParser
 
 
@@ -169,22 +169,22 @@ if options.input_type == "f":
         else:
             file_output = ph_to_i18n(f)
     if format_type == "i18n":
-        file_output = "/*\n" \
-                      " * Copyright (C) 2016-2019 phantombot.dev\n" \
-                      " *\n" \
-                      " * This program is free software: you can redistribute it and/or modify\n" \
-                      " * it under the terms of the GNU General Public License as published by\n" \
-                      " * the Free Software Foundation, either version 3 of the License, or\n" \
-                      " * (at your option) any later version.\n" \
-                      " *\n" \
-                      " * This program is distributed in the hope that it will be useful,\n" \
-                      " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n" \
-                      " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" \
-                      " * GNU General Public License for more details.\n" \
-                      " *\n" \
-                      " * You should have received a copy of the GNU General Public License\n" \
-                      " * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" \
-                      " */\n\n" + file_output
+        file_output = "/*\n\r" \
+                      " * Copyright (C) 2016-2019 phantombot.dev\n\r" \
+                      " *\n\r" \
+                      " * This program is free software: you can redistribute it and/or modify\n\r" \
+                      " * it under the terms of the GNU General Public License as published by\n\r" \
+                      " * the Free Software Foundation, either version 3 of the License, or\n\r" \
+                      " * (at your option) any later version.\n\r" \
+                      " *\n\r" \
+                      " * This program is distributed in the hope that it will be useful,\n\r" \
+                      " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n\r" \
+                      " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\r" \
+                      " * GNU General Public License for more details.\n\r" \
+                      " *\n\r" \
+                      " * You should have received a copy of the GNU General Public License\n\r" \
+                      " * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\r" \
+                      " */\n\r\n\r" + file_output
 
     with open(output, "w+") as f:
         print("File converted")
@@ -217,31 +217,36 @@ else:
         _output = output
         if structure[:-1]:
             _output = create_dir(output + "/" + "/".join(structure[:-1]), False)
-
+        filename = None
         if format_type == "i18n":
-            file_output = "/*\n" \
-                          " * Copyright (C) 2016-2020 phantombot.dev\n" \
-                          " *\n" \
-                          " * This program is free software: you can redistribute it and/or modify\n" \
-                          " * it under the terms of the GNU General Public License as published by\n" \
-                          " * the Free Software Foundation, either version 3 of the License, or\n" \
-                          " * (at your option) any later version.\n" \
-                          " *\n" \
-                          " * This program is distributed in the hope that it will be useful,\n" \
-                          " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n" \
-                          " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n" \
-                          " * GNU General Public License for more details.\n" \
-                          " *\n" \
-                          " * You should have received a copy of the GNU General Public License\n" \
-                          " * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n" \
-                          " */\n\n" + file_output
+            file_output = "/*\n\r" \
+                          " * Copyright (C) 2016-2020 phantombot.dev\n\r" \
+                          " *\n\r" \
+                          " * This program is free software: you can redistribute it and/or modify\n\r" \
+                          " * it under the terms of the GNU General Public License as published by\n\r" \
+                          " * the Free Software Foundation, either version 3 of the License, or\n\r" \
+                          " * (at your option) any later version.\n\r" \
+                          " *\n\r" \
+                          " * This program is distributed in the hope that it will be useful,\n\r" \
+                          " * but WITHOUT ANY WARRANTY; without even the implied warranty of\n\r" \
+                          " * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n\r" \
+                          " * GNU General Public License for more details.\n\r" \
+                          " *\n\r" \
+                          " * You should have received a copy of the GNU General Public License\n\r" \
+                          " * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n\r" \
+                          " */\n\r\n\r" + file_output
             with open(_output + "/" + structure[-1][:-5] + ".js", "w+") as f:
                 verbose_output("File converted")
                 f.write(file_output)
+                filename = f.name
         else:
             with open(_output + "/" + structure[-1][:-3] + ".json", "w+") as f:
                 verbose_output("File converted")
                 f.write(file_output)
+                filename = f.name
+        if sys.platform is "linux":
+            os.system("unix2dos -o " + filename)
+            verbose_output("Converted file do dos format: " + filename)
     print("All converted.")
 
 
