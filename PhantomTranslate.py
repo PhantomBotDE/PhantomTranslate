@@ -15,7 +15,9 @@
 # OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 # OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+
 import os, sys, json
+
 from optparse import OptionParser
 
 
@@ -30,6 +32,7 @@ def replace_ph_var(string_item):
         return "(" + string_item[1:-1] + ")"
     else:
         return string_item
+
 
 
 def create_dir(name, cwd=True):
@@ -96,11 +99,13 @@ def i18n_to_ph(file):
     for item in itemiter:
         message = item[1]["message"].encode('utf-8')
         word_list = message.split()
+
         #word_list = [replace_ph_var(word) for word in word_list]
         ph_string = ' '.join(word for word in word_list)
         output += "$.lang.register(\'" + str(item[0]) + "\', \'" + ph_string.replace("'", r"\'") + "\');\n\r"
         verbose_output("Added \"%s\" for PhantomBot lang file" % str(item[0]))
     return output
+
 
 
 def get_file_structure(start_path=os.getcwd()):
@@ -115,7 +120,6 @@ def get_file_structure(start_path=os.getcwd()):
                 files_structure.append(os.path.join(root, name).split("/"))
     return files_structure
 
-
 usage = "usage: %prog [options] arg1 arg2"
 parser = OptionParser(usage=usage)
 parser.add_option("-i", "--input", dest="input", type="string", help="The path to the file to be converted.",
@@ -129,7 +133,6 @@ parser.add_option("-v", "--verbose", action="store_true", dest="verbose", help="
 parser.add_option("-q", "--quiet", action="store_false", dest="verbose", help="Psst... [Default]", default=False)
 parser.add_option("-t", "--type", dest="input_type", type="choice", choices=["f", "d"],
                   help="Choose the if the input is a file or an dir.", metavar="f / d", default="d")
-
 (options, args) = parser.parse_args()
 
 if len(vars(options)) < 1:
@@ -248,5 +251,4 @@ else:
             os.system("unix2dos -o " + filename)
             verbose_output("Converted file to dos format: " + filename)
     print("All converted.")
-
 
