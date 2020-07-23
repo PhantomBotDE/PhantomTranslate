@@ -15,6 +15,7 @@ We use it to help translating with Transifex.
 | `-i PATH` | `--input=PATH` | The path to the file to be converted. |
 | `-o PATH` | `--output=PATH` | The path to the file where the converted data should be saved.|
 | `-f i18n / ph` | `--format=i18n / ph` | Choose the input file type, if it is a i18n JSON file or an PhantomBot lang file. |
+| `-f f / d` | `--type=f / d` | Choose if you input an how directory or one file. |
 | `-v` | `--verbose` | Outputs more for nerds |
 | `-q` | `--quiet` | Psst... *[Default]* |
 
