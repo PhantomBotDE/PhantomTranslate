@@ -247,8 +247,8 @@ else:
                 verbose_output("File converted")
                 f.write(file_output)
                 filename = f.name
-        if sys.platform is "linux":
+        if sys.platform == "linux":
             os.system("unix2dos -o " + filename)
-            verbose_output("Converted file do dos format: " + filename)
+            verbose_output("Converted file to dos format: " + filename)
     print("All converted.")
 
