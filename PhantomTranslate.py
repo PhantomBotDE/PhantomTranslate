@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2019 phantombot.dev
+# Copyright (c) 2020 phantombot.dev
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 # documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
@@ -32,7 +32,6 @@ def replace_ph_var(string_item):
         return "(" + string_item[1:-1] + ")"
     else:
         return string_item
-
 
 
 def create_dir(name, cwd=True):
@@ -100,12 +99,11 @@ def i18n_to_ph(file):
         message = item[1]["message"].encode('utf-8')
         word_list = message.split()
 
-        #word_list = [replace_ph_var(word) for word in word_list]
+        # word_list = [replace_ph_var(word) for word in word_list]
         ph_string = ' '.join(word for word in word_list)
         output += "$.lang.register(\'" + str(item[0]) + "\', \'" + ph_string.replace("'", r"\'") + "\');\n\r"
         verbose_output("Added \"%s\" for PhantomBot lang file" % str(item[0]))
     return output
-
 
 
 def get_file_structure(start_path=os.getcwd()):
@@ -119,6 +117,7 @@ def get_file_structure(start_path=os.getcwd()):
             if tmp[-1] == "js" or tmp[-1] == "json":
                 files_structure.append(os.path.join(root, name).split("/"))
     return files_structure
+
 
 usage = "usage: %prog [options] arg1 arg2"
 parser = OptionParser(usage=usage)
@@ -173,7 +172,7 @@ if options.input_type == "f":
             file_output = ph_to_i18n(f)
     if format_type == "i18n":
         file_output = "/*\n\r" \
-                      " * Copyright (C) 2016-2019 phantombot.dev\n\r" \
+                      " * Copyright (C) 2016-2020 phantombot.dev\n\r" \
                       " *\n\r" \
                       " * This program is free software: you can redistribute it and/or modify\n\r" \
                       " * it under the terms of the GNU General Public License as published by\n\r" \
@@ -251,4 +250,3 @@ else:
             os.system("unix2dos -o " + filename)
             verbose_output("Converted file to dos format: " + filename)
     print("All converted.")
-
